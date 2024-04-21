@@ -53,22 +53,44 @@ int setSeconds() {
 }
 
 //Based on the users choice, modify the current time or exit the program
-//NOTE: I made this program to stop at 23:59:59PM just to maintain real times. Ideally it would contain logic to cycle back to 00:00:00 if it was incremented again.
 void modifyTime(int choice) {
 	switch (choice) {
 	case 1:
-		if (hours < 23) {          //Hours cannot be greater than 23(11PM)
+		if (hours < 23) {             //Hours cannot be greater than 23(11PM)
 			hours = hours + 1;
 		}
-		break;
-	case 2:
-		if (minutes < 59) {        //Minutes cannot be greater than 59
-			minutes = minutes + 1;
+		else if (hours == 23) {
+			hours = 0;
 		}
 		break;
+
+	case 2:
+		if (minutes < 59) {           //Minutes cannot be greater than 59
+			minutes = minutes + 1;
+		}
+		else if (minutes == 59) {
+			minutes = 0;
+			hours = hours + 1;
+			if (hours == 24) {
+				hours = 0;
+			}
+		}
+		break;
+
 	case 3:
-		if (seconds <59) {         //Seconds cannot be greater than 59
+		if (seconds <59) {            //Seconds cannot be greater than 59
 			seconds = seconds + 1; 
+		}
+		else if (seconds == 59) {
+			seconds = 0;
+			minutes = minutes + 1;
+			if (minutes == 60) {
+				minutes = 0;
+				hours = hours + 1;
+				if (hours == 24) {
+					hours = 0;
+				}
+			}
 		}
 		break;
 	}
